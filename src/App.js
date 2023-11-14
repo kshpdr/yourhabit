@@ -18,7 +18,7 @@ function App() {
   };
 
   const addHabit = (newHabit) => {
-    const habitWithDays = { ...newHabit, days: 0, lastConfirmed: null };
+    const habitWithDays = { ...newHabit, days: 0, lastConfirmed: null, createdAt: new Date().toDateString() };
 
     const updatedHabits = [...habits, habitWithDays];
     setHabits(updatedHabits);
@@ -34,7 +34,7 @@ function App() {
   const handleBreakRule = (habitToBreak) => {
     const updatedHabits = habits.map(habit => {
         if (habit === habitToBreak && habit.type === 'continuous') {
-            return { ...habit, days: 0, lastConfirmed: new Date().toDateString() };
+            return { ...habit, days: 0, createdAt: new Date().toDateString() };
         }
         return habit;
     });
@@ -79,7 +79,7 @@ function App() {
       </Typography>
       {habits.map((habit, index) => {
           const daysDifference = habit.type === 'continuous' 
-              ? calculateDayDifference(habit.lastConfirmed || new Date()) 
+              ? calculateDayDifference(habit.createdAt || new Date()) 
               : habit.days;
 
           return (
